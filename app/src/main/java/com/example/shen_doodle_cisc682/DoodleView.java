@@ -10,11 +10,12 @@ import java.util.ArrayList;
 
 public class DoodleView extends View {
 
-    private Paint brush = new Paint();
     private Path path = new Path();
+    private Paint brush = new Paint();
 
     private ArrayList<Path> paths = new ArrayList<>();
     private ArrayList<Paint> brushes = new ArrayList<>();
+    private ArrayList<Path> undonePaths = new ArrayList<Path>();
 
     public DoodleView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -98,8 +99,34 @@ public class DoodleView extends View {
             path = paths.get(i);
             brush = brushes.get(i);
             canvas.drawPath(path, brush);
+            // paths.add(path);
         }
+    }
+
+    public void undo() {
+        if (paths.size()>0)
+        {
+            undonePaths.add(paths.remove(paths.size()-1));
+            invalidate();
+        }
+        else
+        {
+
+        }
+        //toast the user
+    }
+
+    public void redo(){
+        if (undonePaths.size()>0)
+        {
+            paths.add(undonePaths.remove(undonePaths.size()-1));
+            invalidate();
+        }
+        else
+        {
+
+        }
+        //toast the user
     }
 }
 
-// heres a comment
